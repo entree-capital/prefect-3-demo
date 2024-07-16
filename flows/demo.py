@@ -12,6 +12,11 @@ def hello_universe(names: list[str]):
         say_hello(name)
 
 
+@flow
+def snoop_dogg():
+    print("Whadap yo , shout out to my boy Shimi always first in da house 🚬")
+
+
 if __name__ == "__main__":
     # create your first deployment to automate your flow
     hello_universe.serve(name="your-first-deployment")
