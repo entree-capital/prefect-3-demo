@@ -8,46 +8,37 @@ prefect-version: 3.0.0rc10
 
 # build section allows you to manage and build docker images
 build:
+- prefect_docker.deployments.steps.build_docker_image:
+    requires: prefect-docker>=0.3.1
+    id: build-image
+    dockerfile: Dockerfile
+    image_name: docker.io/kaminskypavel/prefect-3-flow
+    tag: latest
 
 # push section allows you to manage if and how this project is uploaded to remote locations
 push:
+- prefect_docker.deployments.steps.push_docker_image:
+    requires: prefect-docker>=0.3.1
+    image_name: '{{ build-image.image_name }}'
+    tag: '{{ build-image.tag }}'
 
 # pull section allows you to provide instructions for cloning this project in remote locations
 pull:
-- prefect.deployments.steps.git_clone:
-    repository: https://github.com/entree-capital/prefect-3-demo
-    branch: main
-    access_token:
+- prefect.deployments.steps.set_working_directory:
+    directory: .
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:
-- name:
-  version:
+- name: aws-worker-flow
+  version: null
   tags: []
-  description:
-  schedule: {}
-  flow_name:
-  entrypoint:
+  description: null
+  entrypoint: flows\aws-worker.py:my_flow
   parameters: {}
   work_pool:
-    name:
-    work_queue_name:
-    job_variables: {}
-- name: snoop-deploy
-  version:
-  tags: []
-  description:
-  entrypoint: flows\demo.py:snoop_dogg
-  parameters: {}
-  work_pool:
-    name: test-pool
-    work_queue_name:
-    job_variables: {}
+    name: my-ecs-pool
+    work_queue_name: null
+    job_variables:
+      image: '{{ build-image.image }}'
   enforce_parameter_schema: true
-  schedules:
-  - cron: 0 0 * * *
-    timezone: UTC
-    day_or: true
-    active: true
-    max_active_runs:
-    catchup: false
+  schedules: []
