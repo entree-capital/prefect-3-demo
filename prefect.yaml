@@ -7,29 +7,47 @@ name: prefect-3-demo
 prefect-version: 3.0.0rc10
 
 # build section allows you to manage and build docker images
-build: null
+build:
 
 # push section allows you to manage if and how this project is uploaded to remote locations
-push: null
+push:
 
 # pull section allows you to provide instructions for cloning this project in remote locations
 pull:
 - prefect.deployments.steps.git_clone:
     repository: https://github.com/entree-capital/prefect-3-demo
     branch: main
-    access_token: null
+    access_token:
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:
-- name: null
-  version: null
+- name:
+  version:
   tags: []
-  description: null
+  description:
   schedule: {}
-  flow_name: null
-  entrypoint: null
+  flow_name:
+  entrypoint:
   parameters: {}
   work_pool:
-    name: null
-    work_queue_name: null
+    name:
+    work_queue_name:
     job_variables: {}
+- name: snoop-deploy
+  version:
+  tags: []
+  description:
+  entrypoint: flows\demo.py:snoop_dogg
+  parameters: {}
+  work_pool:
+    name: test-pool
+    work_queue_name:
+    job_variables: {}
+  enforce_parameter_schema: true
+  schedules:
+  - cron: 0 0 * * *
+    timezone: UTC
+    day_or: true
+    active: true
+    max_active_runs:
+    catchup: false
