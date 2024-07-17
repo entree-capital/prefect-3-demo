@@ -7,22 +7,30 @@ name: prefect-3-demo
 prefect-version: 3.0.0rc10
 
 # build section allows you to manage and build docker images
+
 build:
-- prefect_docker.deployments.steps.build_docker_image:
-    requires: prefect-docker>=0.3.1
-    id: build-image
-    dockerfile: Dockerfile
-    image_name: docker.io/entreecapital/prefect-3-demo
-    tag: latest
+# # * this was intentually commented out to avoid building the docker image
+# # * so no real deployment is done outside of the CI/CD pipeline
+
+# - prefect_docker.deployments.steps.build_docker_image:
+#     requires: prefect-docker>=0.3.1
+#     id: build-image
+#     image_name: docker.io/entreecapital/prefect-3-demo
+#     tag: latest
 
 # push section allows you to manage if and how this project is uploaded to remote locations
 push:
-- prefect_docker.deployments.steps.push_docker_image:
-    requires: prefect-docker>=0.3.1
-    image_name: '{{ build-image.image_name }}'
-    tag: '{{ build-image.tag }}'
+
+# # * this was intentually commented out to avoid building the docker image
+# # * so no real deployment is done outside of the CI/CD pipeline
+
+# - prefect_docker.deployments.steps.push_docker_image:
+#     requires: prefect-docker>=0.3.1
+#     image_name: '{{ build-image.image_name }}'
+#     tag: '{{ build-image.tag }}' 
 
 # pull section allows you to provide instructions for cloning this project in remote locations
+
 pull:
 - prefect.deployments.steps.set_working_directory:
     directory: .
@@ -39,6 +47,6 @@ deployments:
     name: my-ecs-pool
     work_queue_name: null
     job_variables:
-      image: '{{ build-image.image }}'
+      image: 'docker.io/entreecapital/prefect-3-demo:latest'
   enforce_parameter_schema: true
   schedules: []

@@ -4,7 +4,7 @@ from prefect.docker import DockerImage
 
 @flow(log_prints=True)
 def my_flow(name: str = "world"):
-    print(f"Hello {name}! I'm a flow AWS 🤔😆😆😆😆😆😆😆✅✅✅")
+    print(f"Hello {name}! I'm a flow. I was built and deployed using CI/CD ✅")
 
 
 # if __name__ == "__main__":
