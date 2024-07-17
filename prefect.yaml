@@ -33,7 +33,7 @@ deployments:
   version: null
   tags: []
   description: null
-  entrypoint: flows\aws-worker.py:my_flow
+  entrypoint: flows/aws-worker.py:my_flow
   parameters: {}
   work_pool:
     name: my-ecs-pool
