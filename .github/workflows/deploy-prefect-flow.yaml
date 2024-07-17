@@ -42,7 +42,7 @@ jobs:
           with:
             context: .
             push: true
-            tags: entreecapital/${{env.PROJECT_NAME}}:${{ env.GITHUB_SHA }}
+            tags: entreecapital/${{env.PROJECT_NAME}}:${{ env.GITHUB_SHA }} , entreecapital/${{env.PROJECT_NAME}}:latest
             cache-from: type=gha
             cache-to: type=gha,mode=max
 
@@ -61,9 +61,6 @@ jobs:
           shell: bash
 
         - name: Prefect Deploy
-          env:
-            PREFECT_API_KEY: ${{ secrets.PREFECT_API_KEY }}
-            IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/${{ env.PROJECT_NAME }}:${{ steps.get-commit-hash.outputs.COMMIT_HASH }}-${{ env.ENVIRONMENT }}
           run: |
             prefect cloud workspace ls  
             prefect deploy --all --prefect-file prefect.yaml
