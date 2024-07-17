@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 prefecthq/prefect:3.0.0rc10-python3.11
+FROM prefecthq/prefect:3.0.0rc10-python3.11
 COPY . .
 COPY flows /opt/prefect/flows
 
