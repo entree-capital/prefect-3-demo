@@ -7,15 +7,15 @@ def my_flow(name: str = "world"):
     print(f"Hello {name}! I'm a flow AWS 🤔😆😆😆😆😆😆😆✅✅✅")
 
 
-if __name__ == "__main__":
-    # this is deprecated, use `prefect deploy` instead
-    # my_flow.deploy(
-    #     name="my-deployment1",
-    #     work_pool_name="my-ecs-pool",
-    #     image=DockerImage(
-    #         name="docker.io/entreecapital/prefect-3-demo",
-    #         tag="latest",
-    #         dockerfile="Dockerfile",
-    #         platform="linux/amd64",
-    #     ),
-    # )
+# if __name__ == "__main__":
+# this is deprecated, use `prefect deploy` instead
+# my_flow.deploy(
+#     name="my-deployment1",
+#     work_pool_name="my-ecs-pool",
+#     image=DockerImage(
+#         name="docker.io/entreecapital/prefect-3-demo",
+#         tag="latest",
+#         dockerfile="Dockerfile",
+#         platform="linux/amd64",
+#     ),
+# )
