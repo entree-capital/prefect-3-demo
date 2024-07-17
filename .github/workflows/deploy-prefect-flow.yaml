@@ -51,25 +51,19 @@ jobs:
           with:
             python-version: "3.11"
             cache: "pip"
+        - run: pip install -r requirements.txt
 
         - name: Prefect Auth
-          uses: PrefectHQ/actions-prefect-auth@v1
-          with:
-            prefect-api-key: ${{ secrets.PREFECT_API_KEY }}
-            prefect-workspace: entree-chef/default
+          run: |
+                prefect cloud login \
+                --key ${{ secrets.PREFECT_API_KEY }} \
+                --workspace entree-chef/default
+          shell: bash
 
-        # - name: Run Prefect Deploy
-        #   uses: PrefectHQ/actions-prefect-deploy@v3
-        #   with:
-        #     deployment-names: aws-worker-flow
-        #     # requirements-file-paths: ./examples/simple/requirements.txt
-        #     deployment-file-path: prefect.yaml
-            
         - name: Prefect Deploy
           env:
             PREFECT_API_KEY: ${{ secrets.PREFECT_API_KEY }}
             IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/${{ env.PROJECT_NAME }}:${{ steps.get-commit-hash.outputs.COMMIT_HASH }}-${{ env.ENVIRONMENT }}
           run: |
             prefect cloud workspace ls  
-            pip install -r requirements.txt            
             prefect deploy --all --prefect-file prefect.yaml
