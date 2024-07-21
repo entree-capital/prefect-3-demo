@@ -1,9 +1,7 @@
 # https://aws.amazon.com/blogs/security/use-iam-roles-to-connect-github-actions-to-actions-in-aws/
 
-# This is a basic workflow to help you get started with Actions
 name: Connect to an AWS role from a GitHub repository
 
-# Controls when the action will run. Invokes the workflow on push events but only for the main branch
 on:
   push:
     branches: [ main ]
@@ -11,13 +9,12 @@ on:
     branches: [ main ]
 
 env:
-  
-  AWS_REGION : "us-east-2"
+  AWS_REGION: "us-east-2"
 
-# Permission can be added at job level or workflow level    
 permissions:
-      id-token: write   # This is required for requesting the JWT
-      contents: read    # This is required for actions/checkout
+      id-token: write
+      contents: read
+
 jobs:
   AssumeRoleAndCallIdentity:
     runs-on: ubuntu-latest
@@ -28,17 +25,20 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: configure aws credentials
+      - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
           role-to-assume: arn:aws:iam::573574571452:role/GitHubAction-AssumeRoleWithAction
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ env.AWS_REGION }}
-          
-      # Hello from AWS: WhoAmI
+
       - name: Sts GetCallerIdentity
         run: |
           aws sts get-caller-identity
+
+      - name: Check IAM permissions
+        run: |
+          aws iam simulate-principal-policy --policy-source-arn arn:aws:iam::573574571452:role/GitHubAction-AssumeRoleWithAction --action-names ecr:GetAuthorizationToken ecr:DescribeRepositories ecr:BatchGetImage
 
       - name: ECR list 
         run: aws ecr describe-repositories
@@ -47,8 +47,15 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: pull private image
+      - name: Pull private image
         run: |
-            docker pull 573574571452.dkr.ecr.us-east-2.amazonaws.com/prefect-flows:latest
+          docker pull 573574571452.dkr.ecr.us-east-2.amazonaws.com/prefect-flows:latest
+        if: success()
 
-
+      - name: Debug on failure
+        if: failure()
+        run: |
+          echo "Debug information:"
+          aws sts get-caller-identity
+          aws ecr get-authorization-token
+          aws ecr describe-repositories
