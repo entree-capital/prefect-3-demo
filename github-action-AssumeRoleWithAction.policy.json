@@ -11,13 +11,20 @@
             "Sid": "ECRActions",
             "Effect": "Allow",
             "Action": [
+                "ecr:GetAuthorizationToken",
                 "ecr:BatchCheckLayerAvailability",
                 "ecr:GetDownloadUrlForLayer",
                 "ecr:GetRepositoryPolicy",
                 "ecr:DescribeRepositories",
                 "ecr:ListImages",
                 "ecr:DescribeImages",
-                "ecr:BatchGetImage"
+                "ecr:BatchGetImage",
+                "ecr:InitiateLayerUpload",
+                "ecr:UploadLayerPart",
+                "ecr:CompleteLayerUpload",
+                "ecr:PutImage",
+                "ecr:CreateRepository",
+                "ecr:TagResource"
             ],
             "Resource": "arn:aws:ecr:us-east-2:573574571452:repository/*"
         }
