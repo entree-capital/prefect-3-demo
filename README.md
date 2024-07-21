@@ -46,3 +46,5 @@ prefect deploy --prefect-file prefect.yaml
 we will be configuring OIDC token to sync AWS and Github.
 
 1. Create a new [OIDC provider in AWS IAM](https://us-east-1.console.aws.amazon.com/iamv2/home?region=us-east-2#/identity_providers/create)
+
+2. create a new policy from `github-action-AssumeRoleWithAction.policy.json` and attach it to the role
