@@ -24,7 +24,10 @@
                 "ecr:CompleteLayerUpload",
                 "ecr:PutImage",
                 "ecr:CreateRepository",
-                "ecr:TagResource"
+                "ecr:TagResource",
+                "ecr:PutLifecyclePolicy",
+                "ecr:GetLifecyclePolicy",
+                "ecr:DeleteLifecyclePolicy"
             ],
             "Resource": "arn:aws:ecr:us-east-2:573574571452:repository/*"
         }
