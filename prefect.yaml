@@ -37,7 +37,7 @@ pull:
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:
-- name: aws-worker-flow
+- name: aws-worker-flow-dockerhub
   version: null
   tags: []
   description: null
@@ -48,5 +48,19 @@ deployments:
     work_queue_name: null
     job_variables:
       image: 'docker.io/entreecapital/prefect-3-demo:latest'
+  enforce_parameter_schema: true
+  schedules: []
+
+- name: aws-worker-flow-ECR
+  version: null
+  tags: []
+  description: null
+  entrypoint: flows/aws-worker.py:my_flow
+  parameters: {}
+  work_pool:
+    name: my-ecs-pool
+    work_queue_name: null
+    job_variables:
+      image: '573574571452.dkr.ecr.us-east-2.amazonaws.com/prefect-flows:latest'
   enforce_parameter_schema: true
   schedules: []
