@@ -43,6 +43,10 @@ jobs:
       - name: ECR list 
         run: aws ecr describe-repositories
 
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
       - name: pull private image
         run: |
             docker pull 573574571452.dkr.ecr.us-east-2.amazonaws.com/prefect-flows:latest
