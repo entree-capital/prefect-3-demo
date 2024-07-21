@@ -40,3 +40,9 @@ prefect deploy --prefect-file prefect.yaml
 3. Setup [ECS worker in prefect](https://docs.prefect.io/latest/integrations/prefect-aws/ecs_guide/)
 4. Deploy the flow in `prefect.yaml`
 
+
+### Connect AWS and Github
+
+we will be configuring OIDC token to sync AWS and Github.
+
+1. Create a new [OIDC provider in AWS IAM](https://us-east-1.console.aws.amazon.com/iamv2/home?region=us-east-2#/identity_providers/create)
