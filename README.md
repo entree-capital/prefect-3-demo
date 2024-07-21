@@ -30,4 +30,13 @@ prefect deploy --prefect-file prefect.yaml
 
 ### Links
 
-- [Docker Repo](https://hub.docker.com/repository/docker/entreecapital/prefect-3-demo/general)
+- [Entree Docker Repo](https://hub.docker.com/repository/docker/entreecapital/prefect-3-demo/general)
+- [Entree AWS ECR](https://us-east-2.console.aws.amazon.com/ecr/repositories/private/573574571452/prefect-flows?region=us-east-2)
+
+### Amazon ECS/ECR
+
+1. Create a new ECR repository
+2. build and [push an image](https://docs.aws.amazon.com/AmazonECR/latest/userguide/docker-pull-ecr-image.html) to it
+3. Setup [ECS worker in prefect](https://docs.prefect.io/latest/integrations/prefect-aws/ecs_guide/)
+4. Deploy the flow in `prefect.yaml`
+
