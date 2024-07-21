@@ -41,7 +41,7 @@ jobs:
           aws sts get-caller-identity
 
       - name: ECR list 
-        run: aws ecr aws ecr describe-repositories
+        run: aws ecr describe-repositories
 
       - name: pull private image
         run: |
